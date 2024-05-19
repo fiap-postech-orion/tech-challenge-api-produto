@@ -4,12 +4,17 @@ services:
     build: .
     ports:
       - "8080:8080"
-    depends_on:
-      - mongoDB
-  mongoDB:
-    image: mongo
-    ports:
-      - "27017:27017"
     environment:
-      MONGO_INITDB_ROOT_USERNAME: mongo
-      MONGO_INITDB_ROOT_PASSWORD: password
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgreSQL:5432/restaurante
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+    depends_on:
+      - postgreSQL
+  postgreSQL:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=restaurante
