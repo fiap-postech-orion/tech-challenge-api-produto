@@ -3,6 +3,7 @@ package br.com.postech.software.architecture.techchallenge.produto.service;
 import br.com.postech.software.architecture.techchallenge.produto.dto.ProdutoDTO;
 import br.com.postech.software.architecture.techchallenge.produto.dto.ValidaProdutoRequestDTO;
 import br.com.postech.software.architecture.techchallenge.produto.dto.ValidaProdutoResponseDTO;
+import br.com.postech.software.architecture.techchallenge.produto.enums.CategoriaEnum;
 import br.com.postech.software.architecture.techchallenge.produto.model.Produto;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.Optional;
 
 public interface ProdutoService {
 
-    List<ProdutoDTO> findAll(Long categoriaId);
+    List<ProdutoDTO> findAll(CategoriaEnum categoria);
 
     ProdutoDTO getDTOById(Long id);
 

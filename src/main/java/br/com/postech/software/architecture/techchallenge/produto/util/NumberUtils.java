@@ -1,5 +1,9 @@
 package br.com.postech.software.architecture.techchallenge.produto.util;
 
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -8,10 +12,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class NumberUtils extends org.apache.commons.lang.math.NumberUtils {
 	private static Logger logger = LoggerFactory.getLogger(NumberUtils.class);

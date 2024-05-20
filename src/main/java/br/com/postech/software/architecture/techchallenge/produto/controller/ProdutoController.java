@@ -3,6 +3,7 @@ package br.com.postech.software.architecture.techchallenge.produto.controller;
 import br.com.postech.software.architecture.techchallenge.produto.dto.ProdutoDTO;
 import br.com.postech.software.architecture.techchallenge.produto.dto.ValidaProdutoRequestDTO;
 import br.com.postech.software.architecture.techchallenge.produto.dto.ValidaProdutoResponseDTO;
+import br.com.postech.software.architecture.techchallenge.produto.enums.CategoriaEnum;
 import br.com.postech.software.architecture.techchallenge.produto.service.ProdutoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -42,8 +43,8 @@ public class ProdutoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProdutoDTO>> listarProdutosPorCategoria(@RequestParam(required = false) Long categoriaId) {
-        return new ResponseEntity<>(produtoService.findAll(categoriaId), HttpStatus.OK);
+    public ResponseEntity<List<ProdutoDTO>> listarProdutosPorCategoria(@RequestParam(required = false) Integer categoriaId) {
+        return new ResponseEntity<>(produtoService.findAll(CategoriaEnum.get(categoriaId)), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
