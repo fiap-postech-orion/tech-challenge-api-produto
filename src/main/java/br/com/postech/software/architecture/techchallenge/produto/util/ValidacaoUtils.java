@@ -1,10 +1,10 @@
 package br.com.postech.software.architecture.techchallenge.produto.util;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
-
-import org.apache.commons.lang.StringUtils;
 
 public class ValidacaoUtils {
 	

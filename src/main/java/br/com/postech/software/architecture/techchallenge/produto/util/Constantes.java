@@ -8,7 +8,7 @@ public class Constantes {
 	
 	public static final Object OBJECT_NULL								= null;
 	
-	public static final String ENUM_PACKAGE 							= "br.com.postech.software.architecture.techchallenge.enums.";
+	public static final String ENUM_PACKAGE 							= "br.com.postech.software.architecture.techchallenge.produto.enums.";
 	public static final String ASSOCIACAO_TYPE 							= "br.com.postech.software.architecture.techchallenge.enums.AssociacaoType";
 	public static final String ENUM_CLASS_NAME 							= "enumClassName";
 		

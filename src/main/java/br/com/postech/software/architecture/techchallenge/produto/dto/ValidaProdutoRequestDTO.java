@@ -14,5 +14,5 @@ import java.util.List;
 @NoArgsConstructor
 public class ValidaProdutoRequestDTO {
 
-    private List<ProdutoDTO> produtoDTOS;
+    private List<ProdutoDTO> produtoDTOs;
 }
