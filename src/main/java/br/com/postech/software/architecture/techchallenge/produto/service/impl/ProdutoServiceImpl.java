@@ -31,7 +31,6 @@ public class ProdutoServiceImpl implements ProdutoService {
     private static final ModelMapper MAPPER = ModelMapperConfiguration.getModelMapper();
     private final ProdutoRepository produtoRepository;
 
-    @Override
     public List<ProdutoDTO> findAll(CategoriaEnum categoria) {
         if (Objects.nonNull(categoria)) {
             return MAPPER.map(produtoRepository.findByCategoria(categoria),
@@ -76,6 +75,16 @@ public class ProdutoServiceImpl implements ProdutoService {
     }
 
 
+    private void setImagesToProduto(Produto produto) {
+        Optional.ofNullable(produto.getImagens())
+                .orElseThrow(() -> new BusinessException("É obrigatório informar pelo menos uma imgem para o produto!"))
+                .stream()
+                .filter(img -> Objects.isNull(img.getProduto()))
+                .forEach(img -> {
+                    img.setProduto(produto);
+                });
+    }
+
     @Override
     public ProdutoDTO atualizar(ProdutoDTO produtoDTO) {
         var produto = MAPPER.map(produtoDTO, Produto.class);
@@ -94,19 +103,9 @@ public class ProdutoServiceImpl implements ProdutoService {
         produtoRepository.deleteById(id);
     }
 
-    private void setImagesToProduto(Produto produto) {
-        Optional.ofNullable(produto.getImagens())
-                .orElseThrow(() -> new BusinessException("É obrigatório informar pelo menos uma imgem para o produto!"))
-                .stream()
-                .filter(img -> Objects.isNull(img.getProduto()))
-                .forEach(img -> {
-                    img.setProduto(produto);
-                });
-    }
-
     public ValidaProdutoResponseDTO validateProduto(ValidaProdutoRequestDTO validaProdutoRequestDTO) {
 
-        if(CollectionUtils.isEmpty(validaProdutoRequestDTO.getProdutoDTOs())){
+        if (CollectionUtils.isEmpty(validaProdutoRequestDTO.getProdutoDTOs())) {
             return new ValidaProdutoResponseDTO().toBuilder()
                     .setIsValid(false)
                     .setErrorMessage("Nenhum Produto informado para Validação")
@@ -114,7 +113,7 @@ public class ProdutoServiceImpl implements ProdutoService {
         }
 
         for (ProdutoDTO produtoDTO : validaProdutoRequestDTO.getProdutoDTOs()) {
-            if(!findOptionalById(produtoDTO.getId()).isPresent()){
+            if (!findOptionalById(produtoDTO.getId()).isPresent()) {
                 return new ValidaProdutoResponseDTO().toBuilder()
                         .setProdutoDTOs(validaProdutoRequestDTO.getProdutoDTOs())
                         .setIsValid(false)
