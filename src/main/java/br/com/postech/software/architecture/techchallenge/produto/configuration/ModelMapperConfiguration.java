@@ -1,15 +1,14 @@
 package br.com.postech.software.architecture.techchallenge.produto.configuration;
 
-import java.util.function.Supplier;
-
-import javax.ws.rs.ext.ContextResolver;
-import javax.ws.rs.ext.Provider;
-
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration.AccessLevel;
 import org.modelmapper.convention.MatchingStrategies;
+
+import javax.ws.rs.ext.ContextResolver;
+import javax.ws.rs.ext.Provider;
+import java.util.function.Supplier;
 
 class NullableMapper extends ModelMapper{
 

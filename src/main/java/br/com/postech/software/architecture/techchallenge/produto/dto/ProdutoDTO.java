@@ -1,5 +1,6 @@
 package br.com.postech.software.architecture.techchallenge.produto.dto;
 
+import br.com.postech.software.architecture.techchallenge.produto.enums.CategoriaEnum;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -22,7 +23,7 @@ public class ProdutoDTO {
     @NotNull
     private String nome;
     @NotNull
-    private ProdutoCategoriaDTO categoria;
+    private CategoriaEnum categoria;
     @NotNull
     @Min(1)
     private BigDecimal valor;

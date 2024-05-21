@@ -1,10 +1,13 @@
 package br.com.postech.software.architecture.techchallenge.produto.model;
 
+import br.com.postech.software.architecture.techchallenge.produto.enums.CategoriaEnum;
+import br.com.postech.software.architecture.techchallenge.produto.util.Constantes;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -32,9 +35,10 @@ public class Produto implements Serializable {
     @Column(nullable = false, length = 500)
     private String descricao;
 
-    @ManyToOne
-    @JoinColumn(name = "categoria_id")
-    private ProdutoCategoria categoria;
+    @Type(value = br.com.postech.software.architecture.techchallenge.produto.enums.AssociacaoType.class,
+            parameters = {@org.hibernate.annotations.Parameter(name = Constantes.ENUM_CLASS_NAME, value = "CategoriaEnum")})
+    @Column(name = "categoria_id")
+    private CategoriaEnum categoria;
 
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProdutoImages> imagens;

@@ -4,11 +4,10 @@ import br.com.postech.software.architecture.techchallenge.produto.configuration.
 import br.com.postech.software.architecture.techchallenge.produto.dto.ProdutoDTO;
 import br.com.postech.software.architecture.techchallenge.produto.dto.ValidaProdutoRequestDTO;
 import br.com.postech.software.architecture.techchallenge.produto.dto.ValidaProdutoResponseDTO;
+import br.com.postech.software.architecture.techchallenge.produto.enums.CategoriaEnum;
 import br.com.postech.software.architecture.techchallenge.produto.exception.BusinessException;
 import br.com.postech.software.architecture.techchallenge.produto.exception.NotFoundException;
 import br.com.postech.software.architecture.techchallenge.produto.model.Produto;
-import br.com.postech.software.architecture.techchallenge.produto.model.ProdutoCategoria;
-import br.com.postech.software.architecture.techchallenge.produto.repository.ProdutoCategoriaRepository;
 import br.com.postech.software.architecture.techchallenge.produto.repository.ProdutoRepository;
 import br.com.postech.software.architecture.techchallenge.produto.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
@@ -31,17 +30,12 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     private static final ModelMapper MAPPER = ModelMapperConfiguration.getModelMapper();
     private final ProdutoRepository produtoRepository;
-    private final ProdutoCategoriaRepository produtoCategoriaRepository;
 
-    @Override
-    public List<ProdutoDTO> findAll(Long categoriaId) {
-        if (Objects.nonNull(categoriaId)) {
-            Optional<ProdutoCategoria> optCategoria = produtoCategoriaRepository.findById(categoriaId);
-            if (optCategoria.isPresent()) {
-                return MAPPER.map(produtoRepository.findByCategoria(optCategoria.get()),
-                        new TypeToken<List<ProdutoDTO>>() {
-                        }.getType());
-            }
+    public List<ProdutoDTO> findAll(CategoriaEnum categoria) {
+        if (Objects.nonNull(categoria)) {
+            return MAPPER.map(produtoRepository.findByCategoria(categoria),
+                    new TypeToken<List<ProdutoDTO>>() {
+                    }.getType());
         }
 
         return MAPPER.map(produtoRepository.findAll(),
@@ -111,17 +105,17 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     public ValidaProdutoResponseDTO validateProduto(ValidaProdutoRequestDTO validaProdutoRequestDTO) {
 
-        if (CollectionUtils.isEmpty(validaProdutoRequestDTO.getProdutoDTOS())) {
+        if (CollectionUtils.isEmpty(validaProdutoRequestDTO.getProdutoDTOs())) {
             return new ValidaProdutoResponseDTO().toBuilder()
                     .setIsValid(false)
                     .setErrorMessage("Nenhum Produto informado para Validação")
                     .build();
         }
 
-        for (ProdutoDTO produtoDTO : validaProdutoRequestDTO.getProdutoDTOS()) {
+        for (ProdutoDTO produtoDTO : validaProdutoRequestDTO.getProdutoDTOs()) {
             if (!findOptionalById(produtoDTO.getId()).isPresent()) {
                 return new ValidaProdutoResponseDTO().toBuilder()
-                        .setProdutoDTOs(validaProdutoRequestDTO.getProdutoDTOS())
+                        .setProdutoDTOs(validaProdutoRequestDTO.getProdutoDTOs())
                         .setIsValid(false)
                         .setErrorMessage("Produto Inválido encontrado")
                         .build();
@@ -129,7 +123,7 @@ public class ProdutoServiceImpl implements ProdutoService {
         }
 
         return new ValidaProdutoResponseDTO().toBuilder()
-                .setProdutoDTOs(validaProdutoRequestDTO.getProdutoDTOS())
+                .setProdutoDTOs(validaProdutoRequestDTO.getProdutoDTOs())
                 .setIsValid(true)
                 .build();
     }
