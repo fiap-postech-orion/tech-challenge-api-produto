@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.text.Normalizer;
 import java.util.List;
 
 
@@ -31,4 +32,13 @@ public class ProdutoDTO {
     private String descricao;
     @NotEmpty
     private List<ProdutoImagesDTO> imagens;
+
+    public void sanitiseDTO() {
+        this.setNome(strip(this.getNome()));
+        this.setDescricao(strip(this.getDescricao()));
+    }
+
+    private String strip(String value) {
+        return Normalizer.normalize(value, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+    }
 }
