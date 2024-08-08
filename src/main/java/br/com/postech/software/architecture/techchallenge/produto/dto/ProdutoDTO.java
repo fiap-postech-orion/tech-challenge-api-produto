@@ -4,6 +4,7 @@ import br.com.postech.software.architecture.techchallenge.produto.enums.Categori
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,15 +22,22 @@ import java.util.List;
 public class ProdutoDTO {
 
     private Long id;
+
+    @Size(min = 1, max = 250)
     @NotNull
     private String nome;
+
     @NotNull
     private CategoriaEnum categoria;
+
     @NotNull
     @Min(1)
     private BigDecimal valor;
+
+    @Size(min = 1, max = 250)
     @NotNull
     private String descricao;
+
     @NotEmpty
     private List<ProdutoImagesDTO> imagens;
 
