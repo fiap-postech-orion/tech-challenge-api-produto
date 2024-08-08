@@ -4,12 +4,14 @@ import br.com.postech.software.architecture.techchallenge.produto.enums.Categori
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.text.Normalizer;
 import java.util.List;
 
 
@@ -20,15 +22,31 @@ import java.util.List;
 public class ProdutoDTO {
 
     private Long id;
+
+    @Size(min = 1, max = 250)
     @NotNull
     private String nome;
+
     @NotNull
     private CategoriaEnum categoria;
+
     @NotNull
     @Min(1)
     private BigDecimal valor;
+
+    @Size(min = 1, max = 250)
     @NotNull
     private String descricao;
+
     @NotEmpty
     private List<ProdutoImagesDTO> imagens;
+
+    public void sanitiseDTO() {
+        this.setNome(strip(this.getNome()));
+        this.setDescricao(strip(this.getDescricao()));
+    }
+
+    private String strip(String value) {
+        return Normalizer.normalize(value, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+    }
 }

@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface ProdutoService {
 
-    List<ProdutoDTO> findAll(CategoriaEnum categoria);
+    List<ProdutoDTO> findAll(Integer categoriaId);
 
     ProdutoDTO getDTOById(Long id);
 

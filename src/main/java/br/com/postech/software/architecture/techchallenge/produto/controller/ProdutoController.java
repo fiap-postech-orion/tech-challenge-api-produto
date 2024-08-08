@@ -26,6 +26,7 @@ public class ProdutoController {
             @RequestBody @Valid ProdutoDTO produtoDTO,
             UriComponentsBuilder uriBuilder
     ) {
+        produtoDTO.sanitiseDTO();
         final var produto = produtoService.save(produtoDTO);
         final var uri = uriBuilder.path("/v1/produtos/{id}").buildAndExpand(produto.getId()).toUri();
         return ResponseEntity.created(uri).body(produto);
@@ -39,12 +40,13 @@ public class ProdutoController {
 
     @PutMapping
     public ResponseEntity<ProdutoDTO> atualizar(@RequestBody @Valid ProdutoDTO produtoDTO) {
+        produtoDTO.sanitiseDTO();
         return ResponseEntity.ok(produtoService.atualizar(produtoDTO));
     }
 
     @GetMapping
     public ResponseEntity<List<ProdutoDTO>> listarProdutosPorCategoria(@RequestParam(required = false) Integer categoriaId) {
-        return new ResponseEntity<>(produtoService.findAll(CategoriaEnum.get(categoriaId)), HttpStatus.OK);
+        return new ResponseEntity<>(produtoService.findAll(categoriaId), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

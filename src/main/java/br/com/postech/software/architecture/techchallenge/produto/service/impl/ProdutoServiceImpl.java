@@ -31,9 +31,10 @@ public class ProdutoServiceImpl implements ProdutoService {
     private static final ModelMapper MAPPER = ModelMapperConfiguration.getModelMapper();
     private final ProdutoRepository produtoRepository;
 
-    public List<ProdutoDTO> findAll(CategoriaEnum categoria) {
-        if (Objects.nonNull(categoria)) {
-            return MAPPER.map(produtoRepository.findByCategoria(categoria),
+    public List<ProdutoDTO> findAll(Integer categoriaId) {
+
+        if (Objects.nonNull(categoriaId)) {
+            return MAPPER.map(produtoRepository.findByCategoria(CategoriaEnum.get(categoriaId)),
                     new TypeToken<List<ProdutoDTO>>() {
                     }.getType());
         }
